@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
         cell.dataset.col = j;
         cell.addEventListener('click', revealCell);
         cell.addEventListener('contextmenu', flagCell);
-        row.push(cell);
         board.appendChild(cell);
+        row.push(cell);
       }
       cells.push(row);
     }
@@ -123,3 +123,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   createBoard();
 });
+            

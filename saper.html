@@ -14,22 +14,44 @@
             margin: 0;
             background-color: #c0c0c0;
         }
+        .window {
+            border: 1px solid #000;
+            background-color: #fff;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+            width: 250px;
+            padding: 10px;
+        }
+        .window-header {
+            background-color: #999;
+            padding: 5px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 1px solid #000;
+        }
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .game-info-item {
+            font-weight: bold;
+        }
         .board {
             display: grid;
-            grid-template-columns: repeat(10, 30px);
-            grid-template-rows: repeat(10, 30px);
+            grid-template-columns: repeat(10, 20px);
+            grid-template-rows: repeat(10, 20px);
             gap: 1px;
             border: 1px solid #000;
             background-color: #808080;
             padding: 3px;
         }
         .cell {
-            width: 30px;
-            height: 30px;
+            width: 20px;
+            height: 20px;
             border: 1px solid #000;
             background-color: #c0c0c0;
             text-align: center;
-            line-height: 30px;
+            line-height: 20px;
             cursor: pointer;
         }
         .cell.revealed {
@@ -42,14 +64,27 @@
     </style>
 </head>
 <body>
-    <div class="board">
-        <!-- Plansza zostanie utworzona przez JavaScript -->
+    <div class="window">
+        <div class="window-header">Saper</div>
+        <div class="game-info">
+            <div class="game-info-item">💣 Mines: <span id="mines-counter">10</span></div>
+            <div class="game-info-item">🚩 Flags: <span id="flags-counter">0</span></div>
+            <div class="game-info-item">😀 Remaining: <span id="remaining-counter">90</span></div>
+        </div>
+        <div class="board">
+            <!-- Plansza zostanie utworzona przez JavaScript -->
+        </div>
     </div>
 
     <script>
         const board = document.querySelector('.board');
+        const minesCounter = document.getElementById('mines-counter');
+        const flagsCounter = document.getElementById('flags-counter');
+        const remainingCounter = document.getElementById('remaining-counter');
         const size = 10; // rozmiar planszy
         const bombs = 10; // ilość min
+        let revealedCount = 0;
+        let flaggedCount = 0;
 
         // Funkcja losująca liczby od 0 do max (bez max)
         function getRandomInt(max) {
@@ -63,6 +98,8 @@
                 cell.classList.add('cell');
                 cell.dataset.row = i;
                 cell.dataset.col = j;
+                cell.addEventListener('click', revealCell);
+                cell.addEventListener('contextmenu', flagCell);
                 board.appendChild(cell);
             }
         }
@@ -79,16 +116,42 @@
             bombCell.classList.add('bomb');
         }
 
-        // Obsługa kliknięcia na komórkę
-        board.addEventListener('click', function(e) {
+        function revealCell(e) {
             const cell = e.target;
-            if (!cell.classList.contains('revealed')) {
+            if (!cell.classList.contains('revealed') && !cell.classList.contains('flagged')) {
                 cell.classList.add('revealed');
                 if (cell.classList.contains('bomb')) {
-                    alert('Przegrałeś!');
+                    alert('Game Over!');
+                    location.reload(); // Po przegranej odświeżamy stronę
+                } else {
+                    revealedCount++;
+                    remainingCounter.textContent = 100 - revealedCount;
                 }
             }
-        });
+        }
+
+        function flagCell(e) {
+            e.preventDefault();
+            const cell = e.target;
+            if (!cell.classList.contains('revealed')) {
+                if (cell.classList.contains('flagged')) {
+                    cell.classList.remove('flagged');
+                    cell.textContent = '';
+                    flaggedCount--;
+                    flagsCounter.textContent = flaggedCount;
+                } else {
+                    cell.classList.add('flagged');
+                    cell.textContent = '🚩';
+                    flaggedCount++;
+                    flagsCounter.textContent = flaggedCount;
+                }
+                // Sprawdzanie warunku wygranej
+                if (flaggedCount === bombs && revealedCount === (size * size) - bombs) {
+                    alert('Congratulations! You win!');
+                    location.reload(); // Po wygranej odświeżamy stronę
+                }
+            }
+        }
     </script>
 </body>
 </html>

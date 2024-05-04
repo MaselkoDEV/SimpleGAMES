@@ -84,6 +84,20 @@
         .game-placeholder:hover .overlay {
             opacity: 1;
         }
+        .change-bg-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .change-bg-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -107,32 +121,28 @@
                 <button class="game-button" onclick="window.location.href = 'test.html';">Guessing Letters</button>
             </div>
         </div>
-        <!-- Dodaj więcej miejsc dla innych gier -->
-        <div class="game-placeholder">
-            <img src="szachy.png" alt="checkers">
-            <div class="overlay">
-                <button class="game-button" onclick="window.location.href = 'szachy.html';">checkers</button>
-            </div>
+  <div class="game-placeholder">
+    <img src="szachy.png" alt="checkers">
+    <div class="overlay">
+        <button class="game-button" onclick="window.location.href = 'szachy.html';">checkers</button>
+    </div>
+      
+</div>
+<div class="game-placeholder">
+    <img src="Saper.png" alt="saper">
+    <div class="overlay">
+        <button class="game-button" onclick="window.location.href = 'saper.html';">Saper</button>
+    </div>
+</div>
+        
+}
 
-
-
-            
-             <div class="game-placeholder">
-            <img src="Saper.png" alt="saper">
-            <div class="overlay">
-                <button class="game-button" onclick="window.location.href = 'saper.html';">Saper</button>
-            </div>
-
-
-
-
-
-
-
-
-            
+}
+        
+        </div>
         <p class="creator-info">Website created by MaselkoDEV</p>
         <p class="report-issue" onclick="reportIssue()">Report a Problem</p>
+        <button class="change-bg-button" onclick="changeBackgroundColor()">Change Background Color</button>
     </div>
 
     <script>
@@ -140,7 +150,19 @@
             // Tutaj możesz dodać kod do otwierania formularza zgłaszania problemu
             alert("Formularz zgłaszania problemu zostanie otwarty.");
         }
+
+        function changeBackgroundColor() {
+            document.body.style.backgroundColor = getRandomColor();
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
     </script>
 </body>
 </html>
-

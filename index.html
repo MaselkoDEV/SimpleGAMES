@@ -25,25 +25,17 @@
         h1 {
             margin-bottom: 30px;
         }
-        .game-placeholder {
-    display: inline-block;
-    .game-placeholder {
+        .game-button {
             display: inline-block;
-            width: 200px;
-            height: 150px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
             margin: 10px;
-            background-color: #f9f9f9;
-            position: relative;
-            overflow: hidden;
-}
-
-/* Dodatkowy styl dla ostatniego game-placeholder */
-.game-placeholder:last-child {
-    margin-right: 0; /* Usuwamy margines z ostatniego game-placeholder */
-}
-        
+            transition: background-color 0.3s ease;
         }
         .game-button:hover {
             background-color: #45a049;
@@ -129,24 +121,17 @@
                 <button class="game-button" onclick="window.location.href = 'test.html';">Guessing Letters</button>
             </div>
         </div>
-  <div class="game-placeholder">
-    <img src="szachy.png" alt="checkers">
-    <div class="overlay">
-        <button class="game-button" onclick="window.location.href = 'szachy.html';">checkers</button>
-    </div>
-      
-</div>
-<div class="game-placeholder">
-    <img src="Saper.png" alt="saper">
-    <div class="overlay">
-        <button class="game-button" onclick="window.location.href = 'saper.html';">Saper</button>
-    </div>
-</div>
-        
-}
-
-}
-        
+        <div class="game-placeholder">
+            <img src="szachy.png" alt="checkers">
+            <div class="overlay">
+                <button class="game-button" onclick="window.location.href = 'szachy.html';">checkers</button>
+            </div>
+        </div>
+        <div class="game-placeholder">
+            <img src="Saper.png" alt="saper">
+            <div class="overlay">
+                <button class="game-button" onclick="window.location.href = 'saper.html';">Saper</button>
+            </div>
         </div>
         <p class="creator-info">Website created by MaselkoDEV</p>
         <p class="report-issue" onclick="reportIssue()">Report a Problem</p>

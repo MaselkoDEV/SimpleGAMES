@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wybierz Grę</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+        .game-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .game-button:hover {
+            background-color: #45a049;
+        }
+        .creator-info {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+        }
+        .report-issue {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .game-placeholder {
+            display: inline-block;
+            width: 200px;
+            height: 150px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin: 10px;
+            background-color: #f9f9f9;
+            position: relative;
+            overflow: hidden;
+        }
+        .game-placeholder img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .game-placeholder .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .game-placeholder:hover .overlay {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Wybierz Grę</h1>
+        <div class="game-placeholder">
+            <img src="TicTacToe.jpg" alt="Tic Tac Toe">
+            <div class="overlay">
+                <button class="game-button" onclick="window.location.href = 'TicTacToe.html';">Tic Tac Toe</button>
+            </div>
+        </div>
+        <div class="game-placeholder">
+            <img src="Snake.jpg" alt="Snake">
+            <div class="overlay">
+                <button class="game-button" onclick="window.location.href = 'snake.html';">Snake</button>
+            </div>
+        </div>
+        <div class="game-placeholder">
+            <img src="GuessingLetters.jpg" alt="Guessing Letters">
+            <div class="overlay">
+                <button class="game-button" onclick="window.location.href = 'test.html';">Guessing Letters</button>
+            </div>
+        </div>
+        <!-- Dodaj więcej miejsc dla innych gier -->
+        <p class="creator-info">Website created by MaselkoDEV</p>
+        <p class="report-issue" onclick="reportIssue()">Report a Problem</p>
+    </div>
+
+    <script>
+        function reportIssue() {
+            // Tutaj możesz dodać kod do otwierania formularza zgłaszania problemu
+            alert("Formularz zgłaszania problemu zostanie otwarty.");
+        }
+    </script>
+</body>
+</html>
+

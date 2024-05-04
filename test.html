@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f0f0f0;
+            transition: background-color 0.5s ease;
+        }
+        #game-container {
+            text-align: center;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #number-container {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        #input-container {
+            margin-bottom: 20px;
+        }
+        #guess-input {
+            font-size: 24px;
+            padding: 5px;
+        }
+        #submit-button {
+            font-size: 24px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        #message {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #toggle-info {
+            font-size: 24px;
+            padding: 5px 10px;
+            cursor: pointer;
+            background-color: #ffffff;
+            border: 1px solid #000000;
+            border-radius: 5px;
+        }
+        #info-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+        #attempts-info {
+            font-size: 18px;
+            color: #808080;
+        }
+        #time-info {
+            font-size: 18px;
+            color: #808080;
+        }
+        #author-info {
+            font-size: 18px;
+            color: #808080;
+            margin-top: 10px;
+        }
+        #black-background {
+            font-size: 18px;
+            cursor: pointer;
+            color: #ffffff;
+            background-color: #000000;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="number-container"></div>
+        <div id="input-container">
+            <input type="number" id="guess-input" min="1" max="500" placeholder="Enter a number">
+            <button id="submit-button">Submit</button>
+        </div>
+        <div id="message"></div>
+        <div id="toggle-info">Hide Info</div>
+        <div id="info-container">
+            <div id="attempts-info">Attempts: 0</div>
+            <div id="time-info">Time: 0s</div>
+        </div>
+    </div>
+
+    <script>
+        const number = Math.floor(Math.random() * 500) + 1;
+        let guessedNumber = "_";
+        let guessInfoEnabled = true;
+        let attempts = 0;
+        let startTime;
+        let timerInterval;
+
+        const numberContainer = document.getElementById("number-container");
+        const input = document.getElementById("guess-input");
+        const submitButton = document.getElementById("submit-button");
+        const message = document.getElementById("message");
+        const toggleInfoButton = document.getElementById("toggle-info");
+        const attemptsInfo = document.getElementById("attempts-info");
+        const timeInfo = document.getElementById("time-info");
+        const authorInfo = document.getElementById("author-info");
+        const blackBackgroundLink = document.getElementById("black-background");
+
+        function updateNumberContainer() {
+            numberContainer.textContent = guessedNumber;
+        }
+
+        function updateTime() {
+            const currentTime = Math.floor((Date.now() - startTime) / 1000);
+            timeInfo.textContent = `Time: ${currentTime}s`;
+        }
+
+        function updateAttempts() {
+            attemptsInfo.textContent = `Attempts: ${attempts}`;
+        }
+
+        function startTimer() {
+            startTime = Date.now();
+            timerInterval = setInterval(updateTime, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function toggleGuessInfo() {
+            guessInfoEnabled = !guessInfoEnabled;
+            toggleInfoButton.textContent = guessInfoEnabled ? "Hide Info" : "Show Info";
+            if (!guessInfoEnabled) {
+                toggleInfoButton.removeEventListener("click", toggleGuessInfo);
+            }
+        }
+
+        toggleInfoButton.addEventListener("click", toggleGuessInfo);
+
+        updateNumberContainer();
+        startTimer();
+
+        submitButton.addEventListener("click", function() {
+            const guess = parseInt(input.value);
+            attempts++;
+            updateAttempts();
+            if (guess >= 1 && guess <= 500) {
+                guessedNumber = guess.toString();
+                updateNumberContainer();
+                if (guessedNumber === number.toString()) {
+                    message.textContent = "Congratulations! You guessed the number!";
+                    input.disabled = true;
+                    submitButton.disabled = true;
+                    stopTimer();
+                    confetti.start();
+                } else {
+                    if (guessInfoEnabled) {
+                        if (guess < number) {
+                            message.textContent = "The number is greater.";
+                        } else {
+                            message.textContent = "The number is smaller.";
+                        }
+                    }
+                }
+                input.value = "";
+            } else {
+                message.textContent = "Please enter a valid number between 1 and 500.";
+            }
+        });
+
+        blackBackgroundLink.addEventListener("click", function() {
+            document.body.style.backgroundColor = "#000000";
+            blackBackgroundLink.style.display = "none";
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1/canvas-confetti.min.js"></script>
+    <script>
+        const confettiSettings = { target: 'my-canvas' };
+        const confetti = new ConfettiGenerator(confettiSettings);
+    </script>
+    <canvas id="my-canvas"></canvas>
+    <div id="author-info">Made by MaselkoDEV</div>
+    <div id="black-background">Black Background</div>
+</body>
+</html>
+

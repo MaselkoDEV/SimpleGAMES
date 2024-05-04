@@ -20,6 +20,7 @@
             box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
             width: 250px;
             padding: 10px;
+            position: relative;
         }
         .window-header {
             background-color: #999;
@@ -53,13 +54,50 @@
             text-align: center;
             line-height: 20px;
             cursor: pointer;
+            position: relative;
         }
         .cell.revealed {
             background-color: #fff;
         }
-        .cell.bomb {
-            background-color: #ff0000;
+        .cell.flagged::after {
+            content: '🚩';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .cell.bomb::after {
+            content: '💣';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 0, 0, 0.5);
             color: #fff;
+            font-size: 12px;
+        }
+        .victory-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            color: #fff;
+            z-index: 100;
+            display: none;
         }
     </style>
 </head>
@@ -75,12 +113,14 @@
             <!-- Plansza zostanie utworzona przez JavaScript -->
         </div>
     </div>
+    <div class="victory-overlay" id="victory-overlay">😎</div>
 
     <script>
         const board = document.querySelector('.board');
         const minesCounter = document.getElementById('mines-counter');
         const flagsCounter = document.getElementById('flags-counter');
         const remainingCounter = document.getElementById('remaining-counter');
+        const victoryOverlay = document.getElementById('victory-overlay');
         const size = 10; // rozmiar planszy
         const bombs = 10; // ilość min
         let revealedCount = 0;
@@ -122,12 +162,13 @@
                 cell.classList.add('revealed');
                 if (cell.classList.contains('bomb')) {
                     alert('Game Over!');
-                    location.reload(); // Po przegranej odświeżamy stronę
+                    window.location.href = 'index.html'; // Po przegranej przenosimy gracza do strony głównej
                 } else {
                     revealedCount++;
                     remainingCounter.textContent = 100 - revealedCount;
                 }
             }
+            checkVictory();
         }
 
         function flagCell(e) {
@@ -141,15 +182,16 @@
                     flagsCounter.textContent = flaggedCount;
                 } else {
                     cell.classList.add('flagged');
-                    cell.textContent = '🚩';
                     flaggedCount++;
                     flagsCounter.textContent = flaggedCount;
                 }
-                // Sprawdzanie warunku wygranej
-                if (flaggedCount === bombs && revealedCount === (size * size) - bombs) {
-                    alert('Congratulations! You win!');
-                    location.reload(); // Po wygranej odświeżamy stronę
-                }
+            }
+            checkVictory();
+        }
+
+        function checkVictory() {
+            if (flaggedCount === bombs && revealedCount === (size * size) - bombs) {
+                victoryOverlay.style.display = 'flex';
             }
         }
     </script>

@@ -1,19 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Saper</title>
-  <link rel="stylesheet" href="saper.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #c0c0c0;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(10, 30px);
+            grid-template-rows: repeat(10, 30px);
+            gap: 1px;
+            border: 1px solid #000;
+            background-color: #808080;
+            padding: 3px;
+        }
+        .cell {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #000;
+            background-color: #c0c0c0;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+        .cell.revealed {
+            background-color: #fff;
+        }
+        .cell.bomb {
+            background-color: #ff0000;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Saper</h1>
-    <div id="board" class="board">
-      
+    <div class="board">
+        <!-- Plansza zostanie utworzona przez JavaScript -->
     </div>
-  </div>
-  <script src="saper.js"></script>
+
+    <script>
+        const board = document.querySelector('.board');
+        const size = 10; // rozmiar planszy
+        const bombs = 10; // ilość min
+
+        // Funkcja losująca liczby od 0 do max (bez max)
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        // Tworzenie planszy
+        for (let i = 0; i < size; i++) {
+            for (let j = 0; j < size; j++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.row = i;
+                cell.dataset.col = j;
+                board.appendChild(cell);
+            }
+        }
+
+        // Umieszczanie bomb na planszy
+        for (let i = 0; i < bombs; i++) {
+            let row, col;
+            do {
+                row = getRandomInt(size);
+                col = getRandomInt(size);
+            } while (board.querySelector(`[data-row='${row}'][data-col='${col}']`).classList.contains('bomb'));
+
+            const bombCell = board.querySelector(`[data-row='${row}'][data-col='${col}']`);
+            bombCell.classList.add('bomb');
+        }
+
+        // Obsługa kliknięcia na komórkę
+        board.addEventListener('click', function(e) {
+            const cell = e.target;
+            if (!cell.classList.contains('revealed')) {
+                cell.classList.add('revealed');
+                if (cell.classList.contains('bomb')) {
+                    alert('Przegrałeś!');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
-

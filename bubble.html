@@ -38,7 +38,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(to bottom, #87CEEB, #1E90FF); /* Dzienne tło */
-            animation: changeSky 20s linear infinite; /* animacja zmiany czasu */
+            animation: changeSky 600s linear infinite; /* animacja zmiany czasu */
         }
         @keyframes changeSky {
             0% { background: linear-gradient(to bottom, #87CEEB, #1E90FF); } /* Dzień */
@@ -53,7 +53,7 @@
             height: 100px;
             background: radial-gradient(circle at 50% 20%, #FFD700, transparent); /* żółte słoneczko */
             border-radius: 50%; /* kształt słoneczka */
-            animation: moveSun 20s linear infinite; /* animacja ruchu słońca */
+            animation: moveSun 600s linear infinite; /* animacja ruchu słońca */
         }
         @keyframes moveSun {
             0% { left: 50%; top: 10%; } /* Dzień */
@@ -82,7 +82,7 @@
     <div id="gameContainer">
         <div id="sky"></div>
         <div id="sun"></div>
-        <div id="header">Poprzeszczono bańek: <span id="counter">0</span></div>
+        <div id="header"> <span id="counter">0</span></div>
     </div>
 
     <audio id="popSound" src="pop.mp3"></audio>
@@ -120,11 +120,8 @@
         // Dodanie bańek co 1 sekundę
         setInterval(createBubble, 1000);
 
-        // Wywołanie funkcji sprawdzającej czas dnia przy załadowaniu strony
-        checkTimeOfDay();
-
-        // Sprawdzenie czasu dnia co minutę
-        setInterval(checkTimeOfDay, 60000);
+        // Sprawdzenie czasu dnia co 10 minut
+        setInterval(checkTimeOfDay, 600000);
 
         // Sprawdzenie czasu dnia i ustawienie odpowiedniego tła oraz koloru słońca
         function checkTimeOfDay() {

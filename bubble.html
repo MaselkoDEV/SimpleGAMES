@@ -8,6 +8,8 @@
         body {
             margin: 0;
             overflow: hidden;
+            color: white;
+            font-family: Arial, sans-serif;
         }
         #gameContainer {
             position: relative;
@@ -50,12 +52,28 @@
             height: 100px;
             background: radial-gradient(circle at 50% 20%, #FFD700, transparent); /* żółte słoneczko */
             border-radius: 50%; /* kształt słoneczka */
-            animation: moveSun 20s linear infinite; /* animacja ruchu słońca */
+            animation: moveSun linear infinite; /* animacja ruchu słońca */
         }
         @keyframes moveSun {
             0% { left: 50%; top: 10%; } /* Dzień */
-            50% { left: 90%; top: 50%; } /* Zmierzch */
-            100% { left: 50%; top: 90%; } /* Noc */
+            100% { left: calc(90% - 50px); top: 10%; } /* Noc */
+        }
+        #header {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            font-weight: bold;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.5); /* Przezroczyste tło dla napisu */
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Cień dla napisu */
+            animation: fadeIn 2s ease forwards; /* Animacja pojawienia się napisu */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -63,6 +81,7 @@
     <div id="gameContainer">
         <div id="sky"></div>
         <div id="sun"></div>
+        <div id="header">Poprzeszczono bańek: <span id="counter">0</span></div>
     </div>
 
     <audio id="popSound" src="pop.mp3"></audio>
@@ -83,23 +102,33 @@
             bubble.addEventListener('click', () => {
                 bubble.style.display = 'none'; // Ukrycie bańki
                 document.getElementById('popSound').play(); // Odtworzenie dźwięku kliknięcia
+                updateCounter(); // Aktualizacja licznika
             });
 
             document.getElementById('gameContainer').appendChild(bubble); // Dodanie bańki do kontenera
+        }
+
+        // Funkcja aktualizująca licznik klikniętych bańek
+        function updateCounter() {
+            const counterElement = document.getElementById('counter');
+            let count = parseInt(counterElement.textContent);
+            count++;
+            counterElement.textContent = count;
         }
 
         // Sprawdzenie czasu dnia i ustawienie odpowiedniego tła
         function checkTimeOfDay() {
             const date = new Date();
             const hour = date.getHours();
-            const minute = date.getMinutes();
 
-            if (hour >= 6 && hour < 20) {
-                // Dzień
-                document.getElementById('sky').style.background = 'linear-gradient(to bottom, #87CEEB, #1E90FF)';
-            } else {
+            if (hour >= 20 || hour < 6) {
                 // Noc
                 document.getElementById('sky').style.background = 'linear-gradient(to bottom, #191970, #00008B)';
+                document.getElementById('header').style.backgroundColor = 'rgba(255, 255, 255, 0.7)'; // Przezroczyste tło dla napisu
+            } else {
+                // Dzień
+                document.getElementById('sky').style.background = 'linear-gradient(to bottom, #87CEEB, #1E90FF)';
+                document.getElementById('header').style.backgroundColor = 'rgba(255, 255, 255, 0.5)'; // Przezroczyste tło dla napisu
             }
         }
 

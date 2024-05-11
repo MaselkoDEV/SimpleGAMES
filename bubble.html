@@ -82,7 +82,7 @@
     <div id="gameContainer">
         <div id="sky"></div>
         <div id="sun"></div>
-        <div id="header"> <span id="counter">0</span></div>
+        <div id="header">Poprzeszczono bańek: <span id="counter">0</span></div>
     </div>
 
     <audio id="popSound" src="pop.mp3"></audio>
@@ -95,6 +95,7 @@
 
         // Funkcja generująca nową bańkę i dodająca ją do gry
         function createBubble() {
+            if (document.getElementsByClassName('bubble').length >= 10) return; // Ograniczenie do maksymalnie 10 baniek
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
             bubble.style.top = getRandomNumber(0, window.innerHeight - 50) + 'px'; // losowa pozycja w pionie
@@ -131,12 +132,15 @@
             if (hour >= 6 && hour < 10) {
                 // Rano (6:00 - 10:00)
                 document.getElementById('sky').style.background = 'linear-gradient(to bottom, #FFD700, #FFA500)';
+                document.getElementById('sun').style.background = 'radial-gradient(circle at 50% 20%, #FFD700, transparent)'; // Jasne słońce
             } else if (hour >= 10 && hour < 20) {
                 // Południe (10:00 - 20:00)
                 document.getElementById('sky').style.background = 'linear-gradient(to bottom, #1E90FF, #0000FF)';
+                document.getElementById('sun').style.background = 'radial-gradient(circle at 50% 20%, #FFD700, transparent)'; // Jasne słońce
             } else {
                 // Wieczór i noc (20:00 - 6:00)
                 document.getElementById('sky').style.background = 'linear-gradient(to bottom, #191970, #00008B)';
+                document.getElementById('sun').style.background = 'radial-gradient(circle at 50% 20%, #000, transparent)'; // Ciemne słońce
             }
         }
     </script>

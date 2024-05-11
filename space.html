@@ -6,51 +6,45 @@
     <title>Panel Administracyjny</title>
 </head>
 <body>
-    <h1>Panel Administracyjny</h1>
-
-    <!-- Formularz logowania -->
-    <form id="loginForm">
-        <label for="password">Hasło administratora:</label>
-        <input type="password" id="password" name="password">
-        <button type="submit">Zaloguj</button>
-    </form>
-
-    <!-- Licznik odwiedzin -->
-    <p>Liczba odwiedzin: <span id="visitCount">0</span></p>
-
-    <!-- Linki do pobrania plików -->
-    <h2>Pobierz pliki:</h2>
-    <ul>
-        <li><a href="https://www.mediafire.com/file/qcqvltjnzx93357/BigKlaomtyMEGABASS.wav/file" download>Plik 1</a></li>
-        <li><a href="https://www.mediafire.com/file/pdt5pytmzz53sfn/Ein%252C_zwei%252C_Polizei_rave_mix_Hitler_%2528full_vid%25C3%25A9o%2529.wav/file" download>Plik 2</a></li>
-        <li><a href="https://www.mediafire.com/file/g5ox3edfyg4lo9u/MajuMajMegaBASS.wav/file" download>Plik 3</a></li>
-    </ul>
-
-    <!-- Link do GitHuba -->
-    <p>Link do kodu źródłowego: <a href="https://github.com/MaselkoDEV/SimpleGAMES">GitHub</a></p>
+    <div id="adminPanel" style="display: none;">
+        <h1>Panel Administracyjny</h1>
+        <button onclick="editIndex()">Edytuj stronę</button>
+        <button onclick="addToGitHub()">Dodaj do GitHub</button>
+        <button onclick="logout()">Wyloguj</button>
+    </div>
 
     <script>
-        // Skrypt do obsługi logowania i licznika odwiedzin
-        const loginForm = document.getElementById('loginForm');
-        const visitCountElement = document.getElementById('visitCount');
+        const password = "admin"; // hasło dostępu
 
-        // Przykładowa implementacja - do zastąpienia prawdziwą logiką
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const password = event.target.password.value;
-            if (password === 'admin') {
-                alert('Zalogowano pomyślnie!');
-                // Tutaj dodaj kod do zmiany hasła lub innych działań administracyjnych
+        // Funkcja sprawdzająca poprawność hasła
+        function checkPassword() {
+            const inputPassword = prompt("Wpisz hasło administratora:");
+            if (inputPassword === password) {
+                document.getElementById("adminPanel").style.display = "block";
             } else {
-                alert('Błędne hasło!');
+                alert("Błędne hasło!");
             }
-        });
+        }
 
-        // Przykładowa implementacja - do zastąpienia prawdziwą logiką
-        let visitCount = parseInt(localStorage.getItem('visitCount')) || 0;
-        visitCount++;
-        localStorage.setItem('visitCount', visitCount);
-        visitCountElement.textContent = visitCount;
+        // Funkcja wywoływana po kliknięciu "Edytuj stronę"
+        function editIndex() {
+            // Tutaj możesz umieścić kod umożliwiający edycję zawartości strony
+            alert("Edycja strony jest w trakcie implementacji.");
+        }
+
+        // Funkcja dodająca pliki do GitHuba
+        function addToGitHub() {
+            // Tutaj umieść kod dodający zmiany do GitHuba, korzystając z GitHub API
+            alert("Dodawanie plików do GitHuba jest w trakcie implementacji.");
+        }
+
+        // Funkcja wylogowująca użytkownika
+        function logout() {
+            document.getElementById("adminPanel").style.display = "none";
+        }
+
+        // Po załadowaniu strony, sprawdź hasło
+        window.onload = checkPassword;
     </script>
 </body>
 </html>

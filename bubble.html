@@ -6,20 +6,15 @@
     <title>Bubble Popper</title>
     <style>
         body {
-            background-color: #87CEEB; /* jasnoniebieskie tło */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
         #gameContainer {
             position: relative;
-            width: 500px;
-            height: 500px;
-            background-color: white;
-            border-radius: 50%; /* kwadratowa plansza z zaokrąglonymi rogami daje efekt koła */
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* cień dla głównego kontenera */
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            perspective: 1000px;
         }
         .bubble {
             position: absolute;
@@ -28,12 +23,47 @@
             background-color: #FFD700; /* żółty kolor bańki */
             border-radius: 50%; /* bańki są kołowe */
             cursor: pointer; /* kursor zmienia się na wskazujący, aby pokazać, że bańka jest interaktywna */
-            transition: transform 0.2s ease; /* efekt przejścia przy usuwaniu bańki */
+            animation: pop 1s ease forwards; /* animacja pykania bańki */
+        }
+        @keyframes pop {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.5); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        #sky {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #87CEEB, #1E90FF); /* gradient od nieba do wody */
+            animation: changeSky 20s linear infinite; /* animacja zmiany czasu */
+        }
+        @keyframes changeSky {
+            0% { background: linear-gradient(to bottom, #87CEEB, #1E90FF); } /* dzień */
+            50% { background: linear-gradient(to bottom, #FFA500, #FF6347); } /* zmierzch */
+            100% { background: linear-gradient(to bottom, #191970, #00008B); } /* noc */
+        }
+        #sun {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 50% 20%, #FFD700, transparent); /* żółte słoneczko */
+            border-radius: 50%; /* kształt słoneczka */
+            animation: moveSun 20s linear infinite; /* animacja ruchu słońca */
+        }
+        @keyframes moveSun {
+            0% { left: 50%; top: 10%; } /* dzień */
+            50% { left: 90%; top: 50%; } /* zmierzch */
+            100% { left: 50%; top: 90%; } /* noc */
         }
     </style>
 </head>
 <body>
-    <div id="gameContainer"></div>
+    <div id="gameContainer">
+        <div id="sky"></div>
+        <div id="sun"></div>
+    </div>
+
+    <audio id="popSound" src="pop.mp3"></audio>
 
     <script>
         // Funkcja generująca losowe liczby z zakresu min do max
@@ -45,12 +75,13 @@
         function createBubble() {
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
-            bubble.style.top = getRandomNumber(0, 450) + 'px'; // losowa pozycja w pionie
-            bubble.style.left = getRandomNumber(0, 450) + 'px'; // losowa pozycja w poziomie
+            bubble.style.top = getRandomNumber(0, window.innerHeight - 50) + 'px'; // losowa pozycja w pionie
+            bubble.style.left = getRandomNumber(0, window.innerWidth - 50) + 'px'; // losowa pozycja w poziomie
 
             bubble.addEventListener('click', () => {
                 bubble.style.transform = 'scale(0)'; // zmniejszanie bańki do zera
-                setTimeout(() => bubble.remove(), 200); // usunięcie bańki po 200ms
+                setTimeout(() => bubble.remove(), 1000); // usunięcie bańki po 1s
+                document.getElementById('popSound').play(); // odtworzenie dźwięku kliknięcia
             });
 
             document.getElementById('gameContainer').appendChild(bubble); // dodanie bańki do kontenera

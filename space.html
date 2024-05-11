@@ -3,14 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Invaders</title>
-    <link rel="stylesheet" href="space.css">
+    <title>Panel Administracyjny</title>
 </head>
 <body>
-    <div class="game-container">
-        <canvas id="gameCanvas" width="480" height="320"></canvas>
-    </div>
+    <h1>Panel Administracyjny</h1>
 
-    <script src="space.js"></script>
+    <!-- Formularz logowania -->
+    <form id="loginForm">
+        <label for="password">Hasło administratora:</label>
+        <input type="password" id="password" name="password">
+        <button type="submit">Zaloguj</button>
+    </form>
+
+    <!-- Licznik odwiedzin -->
+    <p>Liczba odwiedzin: <span id="visitCount">0</span></p>
+
+    <!-- Linki do pobrania plików -->
+    <h2>Pobierz pliki:</h2>
+    <ul>
+        <li><a href="https://www.mediafire.com/file/qcqvltjnzx93357/BigKlaomtyMEGABASS.wav/file" download>Plik 1</a></li>
+        <li><a href="https://www.mediafire.com/file/pdt5pytmzz53sfn/Ein%252C_zwei%252C_Polizei_rave_mix_Hitler_%2528full_vid%25C3%25A9o%2529.wav/file" download>Plik 2</a></li>
+        <li><a href="https://www.mediafire.com/file/g5ox3edfyg4lo9u/MajuMajMegaBASS.wav/file" download>Plik 3</a></li>
+    </ul>
+
+    <!-- Link do GitHuba -->
+    <p>Link do kodu źródłowego: <a href="https://github.com/MaselkoDEV/SimpleGAMES">GitHub</a></p>
+
+    <script>
+        // Skrypt do obsługi logowania i licznika odwiedzin
+        const loginForm = document.getElementById('loginForm');
+        const visitCountElement = document.getElementById('visitCount');
+
+        // Przykładowa implementacja - do zastąpienia prawdziwą logiką
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const password = event.target.password.value;
+            if (password === 'admin') {
+                alert('Zalogowano pomyślnie!');
+                // Tutaj dodaj kod do zmiany hasła lub innych działań administracyjnych
+            } else {
+                alert('Błędne hasło!');
+            }
+        });
+
+        // Przykładowa implementacja - do zastąpienia prawdziwą logiką
+        let visitCount = parseInt(localStorage.getItem('visitCount')) || 0;
+        visitCount++;
+        localStorage.setItem('visitCount', visitCount);
+        visitCountElement.textContent = visitCount;
+    </script>
 </body>
 </html>

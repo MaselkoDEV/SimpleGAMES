@@ -82,7 +82,7 @@
     <div id="gameContainer">
         <div id="sky"></div>
         <div id="sun"></div>
-        <div id="header">Poprzeszczono bańek: <span id="counter">0</span></div>
+        <div id="header"> <span id="counter">0</span></div>
     </div>
 
     <audio id="popSound" src="pop.mp3"></audio>
@@ -95,7 +95,6 @@
 
         // Funkcja generująca nową bańkę i dodająca ją do gry
         function createBubble() {
-            if (document.getElementsByClassName('bubble').length >= 10) return; // Ograniczenie do maksymalnie 10 baniek
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
             bubble.style.top = getRandomNumber(0, window.innerHeight - 50) + 'px'; // losowa pozycja w pionie
@@ -118,7 +117,7 @@
             counterElement.textContent = count;
         }
 
-        // Dodanie bańek co 1 sekundę
+        // Dodanie baniek co 1 sekundę
         setInterval(createBubble, 1000);
 
         // Sprawdzenie czasu dnia co 10 minut

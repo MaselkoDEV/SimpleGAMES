@@ -42,8 +42,9 @@
         }
         @keyframes changeSky {
             0% { background: linear-gradient(to bottom, #87CEEB, #1E90FF); } /* Dzień */
-            45% { background: linear-gradient(to bottom, #FFA500, #FF6347); } /* Zmierzch */
-            55% { background: linear-gradient(to bottom, #FFA500, #FF6347); } /* Zmierzch */
+            20% { background: linear-gradient(to bottom, #FFD700, #FFA500); } /* 6:00 */
+            40% { background: linear-gradient(to bottom, #1E90FF, #0000FF); } /* 10:00 */
+            80% { background: linear-gradient(to bottom, #1E90FF, #0000FF); } /* 20:00 */
             100% { background: linear-gradient(to bottom, #191970, #00008B); } /* Noc */
         }
         #sun {
@@ -52,7 +53,7 @@
             height: 100px;
             background: radial-gradient(circle at 50% 20%, #FFD700, transparent); /* żółte słoneczko */
             border-radius: 50%; /* kształt słoneczka */
-            animation: moveSun linear infinite; /* animacja ruchu słońca */
+            animation: moveSun 20s linear infinite; /* animacja ruchu słońca */
         }
         @keyframes moveSun {
             0% { left: 50%; top: 10%; } /* Dzień */
@@ -116,30 +117,31 @@
             counterElement.textContent = count;
         }
 
-        // Sprawdzenie czasu dnia i ustawienie odpowiedniego tła
-        function checkTimeOfDay() {
-            const date = new Date();
-            const hour = date.getHours();
-
-            if (hour >= 20 || hour < 6) {
-                // Noc
-                document.getElementById('sky').style.background = 'linear-gradient(to bottom, #191970, #00008B)';
-                document.getElementById('header').style.backgroundColor = 'rgba(255, 255, 255, 0.7)'; // Przezroczyste tło dla napisu
-            } else {
-                // Dzień
-                document.getElementById('sky').style.background = 'linear-gradient(to bottom, #87CEEB, #1E90FF)';
-                document.getElementById('header').style.backgroundColor = 'rgba(255, 255, 255, 0.5)'; // Przezroczyste tło dla napisu
-            }
-        }
-
         // Dodanie bańek co 1 sekundę
         setInterval(createBubble, 1000);
+
+        // Wywołanie funkcji sprawdzającej czas dnia przy załadowaniu strony
+        checkTimeOfDay();
 
         // Sprawdzenie czasu dnia co minutę
         setInterval(checkTimeOfDay, 60000);
 
-        // Wywołanie funkcji sprawdzającej czas dnia przy załadowaniu strony
-        checkTimeOfDay();
+        // Sprawdzenie czasu dnia i ustawienie odpowiedniego tła oraz koloru słońca
+        function checkTimeOfDay() {
+            const date = new Date();
+            const hour = date.getHours();
+
+            if (hour >= 6 && hour < 10) {
+                // Rano (6:00 - 10:00)
+                document.getElementById('sky').style.background = 'linear-gradient(to bottom, #FFD700, #FFA500)';
+            } else if (hour >= 10 && hour < 20) {
+                // Południe (10:00 - 20:00)
+                document.getElementById('sky').style.background = 'linear-gradient(to bottom, #1E90FF, #0000FF)';
+            } else {
+                // Wieczór i noc (20:00 - 6:00)
+                document.getElementById('sky').style.background = 'linear-gradient(to bottom, #191970, #00008B)';
+            }
+        }
     </script>
 </body>
 </html>

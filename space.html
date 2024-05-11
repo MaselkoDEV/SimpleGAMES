@@ -17,6 +17,9 @@
         }
         a {
             color: white;
+            text-decoration: none; /* Usunięcie podkreślenia */
+            display: block; /* Każdy link w osobnym wierszu */
+            margin-bottom: 10px; /* Odstęp między linkami */
         }
     </style>
 </head>
@@ -34,11 +37,9 @@
         <h1>Panel Administracyjny</h1>
         <button onclick="showSource()">Wyświetl kod źródłowy</button>
         <h2>Pobierz pliki:</h2>
-        <ul>
-            <li><a href="https://www.mediafire.com/file/qcqvltjnzx93357/BigKlaomtyMEGABASS.wav/file" download>Plik 1</a></li>
-            <li><a href="https://www.mediafire.com/file/pdt5pytmzz53sfn/Ein%252C_zwei%252C_Polizei_rave_mix_Hitler_%2528full_vid%25C3%25A9o%2529.wav/file" download>Plik 2</a></li>
-            <li><a href="https://www.mediafire.com/file/g5ox3edfyg4lo9u/MajuMajMegaBASS.wav/file" download>Plik 3</a></li>
-        </ul>
+        <a href="https://www.mediafire.com/file/qcqvltjnzx93357/BigKlaomtyMEGABASS.wav/file" download>Plik 1</a>
+        <a href="https://www.mediafire.com/file/pdt5pytmzz53sfn/Ein%252C_zwei%252C_Polizei_rave_mix_Hitler_%2528full_vid%25C3%25A9o%2529.wav/file" download>Plik 2</a>
+        <a href="https://www.mediafire.com/file/g5ox3edfyg4lo9u/MajuMajMegaBASS.wav/file" download>Plik 3</a>
         <button onclick="logout()">Wyloguj</button>
     </div>
 

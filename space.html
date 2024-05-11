@@ -21,6 +21,20 @@
             display: block; /* Każdy link w osobnym wierszu */
             margin-bottom: 10px; /* Odstęp między linkami */
         }
+        #systemInfo {
+            margin-top: 30px;
+            text-align: center;
+        }
+        #systemInfo p {
+            margin: 5px;
+        }
+        #githubFrame {
+            width: 80%;
+            height: 300px;
+            margin: 20px auto;
+            overflow: auto;
+            border: 2px solid white;
+        }
     </style>
 </head>
 <body>
@@ -41,6 +55,10 @@
         <a href="https://www.mediafire.com/file/pdt5pytmzz53sfn/Ein%252C_zwei%252C_Polizei_rave_mix_Hitler_%2528full_vid%25C3%25A9o%2529.wav/file" download>Plik 2</a>
         <a href="https://www.mediafire.com/file/g5ox3edfyg4lo9u/MajuMajMegaBASS.wav/file" download>Plik 3</a>
         <button onclick="logout()">Wyloguj</button>
+    </div>
+
+    <div id="systemInfo">
+        <iframe id="githubFrame" src="https://github.com/MaselkoDEV/SimpleGAMES"></iframe>
     </div>
 
     <script>

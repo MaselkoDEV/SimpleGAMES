@@ -15,6 +15,7 @@
             height: 100vh;
             overflow: hidden;
             perspective: 1000px;
+            background: linear-gradient(to bottom, #87CEEB, #1E90FF); /* Dzienne tło */
         }
         .bubble {
             position: absolute;
@@ -34,13 +35,14 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, #87CEEB, #1E90FF); /* gradient od nieba do wody */
+            background: linear-gradient(to bottom, #87CEEB, #1E90FF); /* Dzienne tło */
             animation: changeSky 20s linear infinite; /* animacja zmiany czasu */
         }
         @keyframes changeSky {
-            0% { background: linear-gradient(to bottom, #87CEEB, #1E90FF); } /* dzień */
-            50% { background: linear-gradient(to bottom, #FFA500, #FF6347); } /* zmierzch */
-            100% { background: linear-gradient(to bottom, #191970, #00008B); } /* noc */
+            0% { background: linear-gradient(to bottom, #87CEEB, #1E90FF); } /* Dzień */
+            45% { background: linear-gradient(to bottom, #FFA500, #FF6347); } /* Zmierzch */
+            55% { background: linear-gradient(to bottom, #FFA500, #FF6347); } /* Zmierzch */
+            100% { background: linear-gradient(to bottom, #191970, #00008B); } /* Noc */
         }
         #sun {
             position: absolute;
@@ -51,9 +53,9 @@
             animation: moveSun 20s linear infinite; /* animacja ruchu słońca */
         }
         @keyframes moveSun {
-            0% { left: 50%; top: 10%; } /* dzień */
-            50% { left: 90%; top: 50%; } /* zmierzch */
-            100% { left: 50%; top: 90%; } /* noc */
+            0% { left: 50%; top: 10%; } /* Dzień */
+            50% { left: 90%; top: 50%; } /* Zmierzch */
+            100% { left: 50%; top: 90%; } /* Noc */
         }
     </style>
 </head>
@@ -79,16 +81,36 @@
             bubble.style.left = getRandomNumber(0, window.innerWidth - 50) + 'px'; // losowa pozycja w poziomie
 
             bubble.addEventListener('click', () => {
-                bubble.style.transform = 'scale(0)'; // zmniejszanie bańki do zera
-                setTimeout(() => bubble.remove(), 1000); // usunięcie bańki po 1s
-                document.getElementById('popSound').play(); // odtworzenie dźwięku kliknięcia
+                bubble.style.display = 'none'; // Ukrycie bańki
+                document.getElementById('popSound').play(); // Odtworzenie dźwięku kliknięcia
             });
 
-            document.getElementById('gameContainer').appendChild(bubble); // dodanie bańki do kontenera
+            document.getElementById('gameContainer').appendChild(bubble); // Dodanie bańki do kontenera
+        }
+
+        // Sprawdzenie czasu dnia i ustawienie odpowiedniego tła
+        function checkTimeOfDay() {
+            const date = new Date();
+            const hour = date.getHours();
+            const minute = date.getMinutes();
+
+            if (hour >= 6 && hour < 20) {
+                // Dzień
+                document.getElementById('sky').style.background = 'linear-gradient(to bottom, #87CEEB, #1E90FF)';
+            } else {
+                // Noc
+                document.getElementById('sky').style.background = 'linear-gradient(to bottom, #191970, #00008B)';
+            }
         }
 
         // Dodanie bańek co 1 sekundę
         setInterval(createBubble, 1000);
+
+        // Sprawdzenie czasu dnia co minutę
+        setInterval(checkTimeOfDay, 60000);
+
+        // Wywołanie funkcji sprawdzającej czas dnia przy załadowaniu strony
+        checkTimeOfDay();
     </script>
 </body>
 </html>

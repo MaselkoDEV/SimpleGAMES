@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Popper</title>
+    <style>
+        body {
+            background-color: #87CEEB; /* jasnoniebieskie tło */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #gameContainer {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            background-color: white;
+            border-radius: 50%; /* kwadratowa plansza z zaokrąglonymi rogami daje efekt koła */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* cień dla głównego kontenera */
+        }
+        .bubble {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #FFD700; /* żółty kolor bańki */
+            border-radius: 50%; /* bańki są kołowe */
+            cursor: pointer; /* kursor zmienia się na wskazujący, aby pokazać, że bańka jest interaktywna */
+            transition: transform 0.2s ease; /* efekt przejścia przy usuwaniu bańki */
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer"></div>
+
+    <script>
+        // Funkcja generująca losowe liczby z zakresu min do max
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Funkcja generująca nową bańkę i dodająca ją do gry
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.style.top = getRandomNumber(0, 450) + 'px'; // losowa pozycja w pionie
+            bubble.style.left = getRandomNumber(0, 450) + 'px'; // losowa pozycja w poziomie
+
+            bubble.addEventListener('click', () => {
+                bubble.style.transform = 'scale(0)'; // zmniejszanie bańki do zera
+                setTimeout(() => bubble.remove(), 200); // usunięcie bańki po 200ms
+            });
+
+            document.getElementById('gameContainer').appendChild(bubble); // dodanie bańki do kontenera
+        }
+
+        // Dodanie bańek co 1 sekundę
+        setInterval(createBubble, 1000);
+    </script>
+</body>
+</html>

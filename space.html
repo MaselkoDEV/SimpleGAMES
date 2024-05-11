@@ -4,12 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Administracyjny</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #adminPanel {
+            display: none;
+            background-color: black;
+            padding: 20px;
+        }
+        a {
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <div id="adminPanel" style="display: none;">
+    <div id="loginFormContainer">
+        <h1>Logowanie</h1>
+        <form id="loginForm">
+            <label for="password">Hasło administratora:</label>
+            <input type="password" id="password" name="password">
+            <button type="submit">Zaloguj</button>
+        </form>
+    </div>
+
+    <div id="adminPanel">
         <h1>Panel Administracyjny</h1>
-        <button onclick="editIndex()">Edytuj stronę</button>
-        <button onclick="addToGitHub()">Dodaj do GitHub</button>
+        <button onclick="showSource()">Wyświetl kod źródłowy</button>
+        <h2>Pobierz pliki:</h2>
+        <ul>
+            <li><a href="https://www.mediafire.com/file/qcqvltjnzx93357/BigKlaomtyMEGABASS.wav/file" download>Plik 1</a></li>
+            <li><a href="https://www.mediafire.com/file/pdt5pytmzz53sfn/Ein%252C_zwei%252C_Polizei_rave_mix_Hitler_%2528full_vid%25C3%25A9o%2529.wav/file" download>Plik 2</a></li>
+            <li><a href="https://www.mediafire.com/file/g5ox3edfyg4lo9u/MajuMajMegaBASS.wav/file" download>Plik 3</a></li>
+        </ul>
         <button onclick="logout()">Wyloguj</button>
     </div>
 
@@ -17,34 +46,30 @@
         const password = "admin"; // hasło dostępu
 
         // Funkcja sprawdzająca poprawność hasła
-        function checkPassword() {
-            const inputPassword = prompt("Wpisz hasło administratora:");
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const inputPassword = event.target.password.value;
             if (inputPassword === password) {
+                document.getElementById("loginFormContainer").style.display = "none";
                 document.getElementById("adminPanel").style.display = "block";
             } else {
                 alert("Błędne hasło!");
             }
-        }
+        });
 
-        // Funkcja wywoływana po kliknięciu "Edytuj stronę"
-        function editIndex() {
-            // Tutaj możesz umieścić kod umożliwiający edycję zawartości strony
-            alert("Edycja strony jest w trakcie implementacji.");
-        }
-
-        // Funkcja dodająca pliki do GitHuba
-        function addToGitHub() {
-            // Tutaj umieść kod dodający zmiany do GitHuba, korzystając z GitHub API
-            alert("Dodawanie plików do GitHuba jest w trakcie implementacji.");
+        // Funkcja wyświetlająca kod źródłowy
+        function showSource() {
+            const htmlCode = document.documentElement.innerHTML;
+            const codeWindow = window.open("", "_blank");
+            codeWindow.document.write("<pre>" + htmlCode + "</pre>");
+            codeWindow.document.close();
         }
 
         // Funkcja wylogowująca użytkownika
         function logout() {
+            document.getElementById("loginFormContainer").style.display = "block";
             document.getElementById("adminPanel").style.display = "none";
         }
-
-        // Po załadowaniu strony, sprawdź hasło
-        window.onload = checkPassword;
     </script>
 </body>
 </html>
